@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { supabase } from './lib/supabase'
-import Login from './components/Login'
 import ClientModal from './components/ClientModal'
 import ClientDetail from './components/ClientDetail'
 
@@ -19,7 +18,6 @@ function avatarColor(name) {
 }
 
 export default function App() {
-  const [authed, setAuthed] = useState(sessionStorage.getItem('app_auth') === 'true')
   const [clients, setClients] = useState([])
   const [activeId, setActiveId] = useState(null)
   const [search, setSearch] = useState('')
@@ -27,7 +25,9 @@ export default function App() {
   const [editingClient, setEditingClient] = useState(null)
   const [loading, setLoading] = useState(true)
 
-  useEffect(() => { if (authed) loadClients() }, [authed])
+  useEffect(() => {
+    loadClients()
+  }, [])
 
   async function loadClients() {
     setLoading(true)
@@ -64,8 +64,6 @@ export default function App() {
 
   function openAdd() { setEditingClient(null); setShowModal(true) }
   function openEdit(client) { setEditingClient(client); setShowModal(true) }
-
-  if (!authed) return <Login onLogin={() => setAuthed(true)} />
 
   return (
     <div style={{ display: 'flex', height: '100vh', fontFamily: 'system-ui, sans-serif', background: '#f5f4f1' }}>
@@ -122,10 +120,6 @@ export default function App() {
             padding: '9px', fontSize: 13, borderRadius: 8,
             border: '0.5px solid #ddd', background: '#fff', cursor: 'pointer', color: '#1a1a1a', fontWeight: 500
           }}>+ Add new client</button>
-          <button onClick={() => { sessionStorage.removeItem('app_auth'); setAuthed(false) }} style={{
-            padding: '7px', fontSize: 12, borderRadius: 8,
-            border: 'none', background: 'none', cursor: 'pointer', color: '#aaa'
-          }}>Sign out</button>
         </div>
       </div>
 
