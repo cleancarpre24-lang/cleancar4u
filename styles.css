@@ -110,6 +110,14 @@ body {
   min-height: var(--header-h);
 }
 
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+}
+
 .header-brand {
   display: flex;
   align-items: center;
@@ -117,10 +125,15 @@ body {
 }
 
 .header-logo {
-  width: 2.5rem;
+  width: auto;
   height: 2.5rem;
-  border-radius: 999px;
-  object-fit: cover;
+  max-width: 7.5rem;
+  border-radius: 0.5rem;
+  object-fit: contain;
+  /* Black logo on light pad — reads on transparent / dark header */
+  background: rgba(248, 246, 240, 0.94);
+  padding: 0.2rem 0.45rem;
+  box-sizing: content-box;
 }
 
 .header-title {
